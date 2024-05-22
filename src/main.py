@@ -6,4 +6,5 @@ import logging
 logger = logging.getLogger()
 
 
-if __name__ == "__main__"
+if __name__ == "__main__":
+    pass
