@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  fetch_news:
+    build:
+      context: .
+      args:
+        ENTRYPOINT: fetch_news
+    container_name: fetch_news_container
+    volumes:
+      - .:/app
+
+  train_model:
+    build:
+      context: .
+      args:
+        ENTRYPOINT: train_model
+    container_name: train_model_container
+    volumes:
+      - .:/app
+
+  predict:
+    build:
+      context: .
+      args:
+        ENTRYPOINT: predict
+    container_name: predict_container
+    volumes:
+      - .:/app

@@ -1,5 +1,3 @@
-output "instance_public_ip" {
-  value = aws_instance.ml_instance.public_ip
+output "mlflow_instance_public_ip" {
+  value = aws_instance.mlflow_instance.public_ip
 }
-
-# Add more outputs as needed

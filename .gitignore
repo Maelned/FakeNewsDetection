@@ -1,1 +1,5 @@
 *.csv
+credentials.json
+credentials.txt
+terraform/
+

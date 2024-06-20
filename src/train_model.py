@@ -1,4 +1,5 @@
 import logging
+import os
 import pickle
 import re
 
@@ -20,11 +21,9 @@ def get_data(csv_path):
     data = data.dropna(subset=['text'])
     return data
 
-
 def preprocess_sentence(sentence):
     sentence = re.sub(r'[^\w\s]', '', sentence)
     return ' '.join(token.lower() for token in sentence.split() if token.lower() not in stop_words)
-
 
 def preprocess_text(text_data):
     preprocessed_text = []
@@ -32,9 +31,13 @@ def preprocess_text(text_data):
         preprocessed_text.append(preprocess_sentence(sentence))
     return preprocessed_text
 
-def train(data):
+def train(dest_path):
     """This function will perform the training of my fake news detection model
     """
+    data = get_data("../data/data_news.csv")
+    preprocessed_review = preprocess_text(data['text'].values) 
+    data['text'] = preprocessed_review
+
     x_train, x_test, y_train, y_test = train_test_split(data['text'],  
                                                     data['label'],  
                                                     test_size=0.25)
@@ -47,13 +50,14 @@ def train(data):
     logger.info(accuracy_score(y_train, model.predict(x_train))) 
     logger.info(accuracy_score(y_test, model.predict(x_test))) 
 
-    with open('../models/model.pkl','wb') as f:
+    with open(os.path.join(dest_path, "model.pkl"),'wb') as f:
         pickle.dump(model,f)
 
 def main():
-    data = get_data("../data/data_news.csv")
-    preprocessed_review = preprocess_text(data['text'].values) 
-    data['text'] = preprocessed_review
-    train(data)
+    
+    dest_path = "../models"
+    train(dest_path)
+
+
 if __name__ == "__main__":
     main()
