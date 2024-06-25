@@ -1,21 +1,16 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.12-slim
 
-# Set the working directory in the container
 WORKDIR /app
-
-# Copy the current directory contents into the container at /app
 COPY . /app
 
-# Install Poetry
 RUN pip install poetry
-
-# Install dependencies
 RUN poetry install
 
-# Set the entrypoint based on the argument passed during build
 ARG ENTRYPOINT
-ENTRYPOINT ["poetry", "run", "python", "-m", "my_news_app.ENTRYPOINT"]
+ENV ENTRYPOINT=${ENTRYPOINT}
 
-# Default command
+
+ENTRYPOINT ["sh", "-c", "poetry run python -m fakenewsdetection.$ENTRYPOINT"]
+
 CMD ["--help"]

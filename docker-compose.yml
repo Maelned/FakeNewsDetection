@@ -2,28 +2,46 @@ version: '3.8'
 
 services:
   fetch_news:
-    build:
-      context: .
-      args:
-        ENTRYPOINT: fetch_news
+    image: fake_news_detection
     container_name: fetch_news_container
     volumes:
       - .:/app
+    entrypoint:
+      [
+        "poetry",
+        "run",
+        "python",
+        "-m",
+        "fakenewsdetection.fetch_news"
+      ]
+    command: [ "--help" ]
 
   train_model:
-    build:
-      context: .
-      args:
-        ENTRYPOINT: train_model
+    image: fake_news_detection
     container_name: train_model_container
     volumes:
       - .:/app
+    entrypoint:
+      [
+        "poetry",
+        "run",
+        "python",
+        "-m",
+        "fakenewsdetection.train_model"
+      ]
+    command: [ "--help" ]
 
   predict:
-    build:
-      context: .
-      args:
-        ENTRYPOINT: predict
+    image: fake_news_detection
     container_name: predict_container
     volumes:
       - .:/app
+    entrypoint:
+      [
+        "poetry",
+        "run",
+        "python",
+        "-m",
+        "fakenewsdetection.predict"
+      ]
+    command: [ "--help" ]

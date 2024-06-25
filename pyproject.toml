@@ -24,6 +24,7 @@ boto3 = "^1.34.117"
 moto = "^5.0.9"
 setuptools = "^70.1.0"
 toml = "^0.10.2"
+pytest = "^8.2.2"
 
 
 [build-system]
